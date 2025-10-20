@@ -86,6 +86,23 @@ class HashMap {
     }
     return false;
   }
+
+  length() {
+    let keyTotal = 0;
+    if (this.buckets.length === 0) {
+      return keyTotal;
+    }
+
+    for (let i = 0; i < this.buckets.length; i++) {
+      let item = this.buckets[i];
+      while (item) {
+        keyTotal++;
+        item = item.next;
+      }
+    }
+
+    return keyTotal;
+  }
 }
 
 class Node {
@@ -121,3 +138,4 @@ console.log(test.has('hat'));
 console.log(test.remove('apple'));
 console.log(test.remove('perro'));
 console.log(test.buckets);
+console.log(test.length());
