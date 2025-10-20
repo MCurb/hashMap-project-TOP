@@ -89,9 +89,6 @@ class HashMap {
 
   length() {
     let keyTotal = 0;
-    if (this.buckets.length === 0) {
-      return keyTotal;
-    }
 
     for (let i = 0; i < this.buckets.length; i++) {
       let item = this.buckets[i];
@@ -102,6 +99,12 @@ class HashMap {
     }
 
     return keyTotal;
+  }
+
+  clear() {
+    for (let i = 0; i < this.buckets.length; i++) {
+      this.buckets[i] = null;
+    }
   }
 }
 
