@@ -30,7 +30,7 @@ Manages nodes and provides a complete HashMap API.
 - `entries()` – Returns an array of `[key, value]` pairs.
 
 ## 🔧 Features
-- Collision handling: Uses linked lists to handle hash collisions.
-- Dynamic resizing: Automatically doubles capacity when the load factor is exceeded.
-- Private fields: Encapsulates internal properties using modern JS private fields (`#buckets`, `#capacity`, etc.).
-- Defensive programming: Includes checks for invalid bucket access to prevent unexpected behavior.
+- **Collision handling**: Uses **linked lists** to handle hash collisions.
+- **Dynamic resizing**: Automatically doubles capacity when the load factor is exceeded.
+- **Private fields**: Encapsulates internal properties using **modern JS private fields** (`#buckets`, `#capacity`, etc.).
+- **Defensive programming**: Includes checks for invalid bucket access to prevent unexpected behavior.
