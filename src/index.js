@@ -134,6 +134,21 @@ class HashMap {
 
     return valuesArray;
   }
+
+  entries() {
+    let entriesArray = [];
+
+    for (let i = 0; i < this.buckets.length; i++) {
+      let item = this.buckets[i];
+      while (item) {
+        let entryArr = [item.key, item.value];
+        entriesArray.push(entryArr);
+        item = item.next;
+      }
+    }
+
+    return entriesArray;
+  }
 }
 
 class Node {
@@ -172,3 +187,4 @@ console.log(test.buckets);
 console.log(test.length());
 console.log(test.keys());
 console.log(test.values());
+console.log(test.entries());
