@@ -120,6 +120,20 @@ class HashMap {
 
     return keysArray;
   }
+
+  values() {
+    let valuesArray = [];
+
+    for (let i = 0; i < this.buckets.length; i++) {
+      let item = this.buckets[i];
+      while (item) {
+        valuesArray.push(item.value);
+        item = item.next;
+      }
+    }
+
+    return valuesArray;
+  }
 }
 
 class Node {
@@ -157,3 +171,4 @@ console.log(test.remove('perro'));
 console.log(test.buckets);
 console.log(test.length());
 console.log(test.keys());
+console.log(test.values());
