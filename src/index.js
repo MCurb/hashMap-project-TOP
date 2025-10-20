@@ -17,11 +17,9 @@ class HashMap {
   }
 
   set(key, value) {
-    //index = hash function with the key % this.capacity
     let index = this.hash(key) % this.capacity;
-    //create the node using the key and the value;
     const node = new Node(key, value);
-    //if this.buckets[index] is empty then make it = to the node
+
     if (this.buckets[index] === undefined) {
       this.buckets[index] = node;
     } else {
@@ -29,6 +27,64 @@ class HashMap {
       this.buckets[index] = node;
     }
     //else make the node.next = this.buckets[index] to make it the new head
+  }
+
+  get(key) {
+    let index = this.hash(key) % this.capacity;
+    if (!this.buckets[index]) {
+      return null;
+    }
+
+    let currentNode = this.buckets[index];
+    while (currentNode) {
+      if (currentNode.key === key) {
+        return currentNode.value;
+      }
+      currentNode = currentNode.next;
+    }
+    return null;
+  }
+
+  has(key) {
+    let index = this.hash(key) % this.capacity;
+    if (!this.buckets[index]) {
+      return false;
+    }
+
+    let currentNode = this.buckets[index];
+
+    while (currentNode) {
+      if (currentNode.key === key) {
+        return true;
+      }
+      currentNode = currentNode.next;
+    }
+
+    return false;
+  }
+
+  remove(key) {
+    let index = this.hash(key) % this.capacity;
+    if (!this.buckets[index]) {
+      return false;
+    }
+
+    let previousNode = this.buckets[index];
+
+    //Test head first
+    if (previousNode.key === key) {
+      this.buckets[index] = previousNode.next;
+      return true;
+    }
+
+    while (previousNode) {
+      if (previousNode.next.key === key) {
+        previousNode.next = previousNode.next.next;
+        return true;
+      }
+      previousNode = previousNode.next;
+    }
+    return false;
   }
 }
 
@@ -60,3 +116,8 @@ test.set('yunia', 'does it collides?');
 test.set('perro', 'hey bro');
 console.log(test.buckets);
 console.log(test.buckets[10]);
+console.log(test.get('mark'));
+console.log(test.has('hat'));
+console.log(test.remove('apple'));
+console.log(test.remove('perro'));
+console.log(test.buckets);
