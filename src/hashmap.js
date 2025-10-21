@@ -4,9 +4,13 @@ export class HashMap {
   #buckets;
   #totalEntries;
 
-  constructor() {
-    this.#loadFactor = 0.75;
-    this.#capacity = 16;
+  constructor(capacity = 16, loadFactor = 0.75) {
+    if (capacity <= 0) throw new Error('Capacity must be greater than 0');
+    if (loadFactor <= 0 || loadFactor > 1)
+      throw new Error('Load factor must be between 0 and 1');
+
+    this.#loadFactor = loadFactor;
+    this.#capacity = capacity;
     this.#buckets = new Array(this.#capacity);
     this.#totalEntries = 0;
   }
@@ -28,20 +32,25 @@ export class HashMap {
     }
   }
 
-  rehashEverything(entriesArr) {
+  #rehashEverything(entriesArr) {
     entriesArr.forEach((entry) => {
       this.set(entry[0], entry[1]);
     });
   }
 
+  #resizeIfNeeded() {
+    const entries = this.entries();
+    this.#capacity *= 2;
+    this.#buckets = new Array(this.#capacity);
+    this.#totalEntries = 0;
+    this.#rehashEverything(entries);
+  }
+
   set(key, value) {
     if (this.#totalEntries >= this.#capacity * this.#loadFactor) {
-      let entries = this.entries();
-      this.#capacity = this.#capacity * 2;
-      this.#buckets = new Array(this.#capacity);
-      this.#totalEntries = 0;
-      this.rehashEverything(entries);
+      this.#resizeIfNeeded();
     }
+
     const index = this.#hash(key);
     this.#checkBounds(index);
     let currentNode = this.#buckets[index];
@@ -82,30 +91,21 @@ export class HashMap {
   }
 
   has(key) {
-    const index = this.#hash(key);
-    if (!this.#buckets[index]) {
+    const contains = this.get(key);
+    if (contains === null) {
       return false;
+    } else {
+      return true;
     }
-
-    let currentNode = this.#buckets[index];
-
-    while (currentNode) {
-      if (currentNode.key === key) {
-        return true;
-      }
-      currentNode = currentNode.next;
-    }
-
-    return false;
   }
 
   remove(key) {
-    const index = this.#hash(key);
-    this.#checkBounds(index);
-    if (!this.#buckets[index]) {
+    if (!this.has(key)) {
       return false;
     }
 
+    const index = this.#hash(key);
+    this.#checkBounds(index);
     let previousNode = this.#buckets[index];
 
     //Test head first
@@ -123,7 +123,6 @@ export class HashMap {
       }
       previousNode = previousNode.next;
     }
-    return false;
   }
 
   length() {
