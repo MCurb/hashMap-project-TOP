@@ -16,7 +16,7 @@ test.set('kite', 'pink');
 test.set('lion', 'golden');
 test.set('moon', 'silver');
 test.set('really long key to test this', 'value my man');
-console.log(test.get('mark'));
+console.log(test.get('frog'));
 console.log(test.has('hat'));
 console.log(test.remove('apple'));
 console.log(test.remove('fox'));

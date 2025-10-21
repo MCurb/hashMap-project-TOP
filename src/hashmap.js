@@ -76,11 +76,8 @@ export class HashMap {
 
   get(key) {
     const index = this.#hash(key);
-    if (!this.#buckets[index]) {
-      return null;
-    }
-
     let currentNode = this.#buckets[index];
+
     while (currentNode) {
       if (currentNode.key === key) {
         return currentNode.value;
@@ -91,12 +88,8 @@ export class HashMap {
   }
 
   has(key) {
-    const contains = this.get(key);
-    if (contains === null) {
-      return false;
-    } else {
-      return true;
-    }
+    const keyExists = this.get(key);
+    return keyExists === null ? false : true;
   }
 
   remove(key) {
